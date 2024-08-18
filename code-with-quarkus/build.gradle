@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'io.quarkus'
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation 'io.quarkiverse.web-bundler:quarkus-web-bundler:1.7.0'
+    implementation 'io.quarkiverse.renarde:quarkus-renarde:3.0.18'
+    implementation 'io.quarkus:quarkus-arc'
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-reactive-routes
+    implementation group: 'io.quarkus', name: 'quarkus-reactive-routes', version: '3.13.2'
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-junit5-component
+    implementation group: 'io.quarkus', name: 'quarkus-junit5-component', version: '3.13.2'
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-junit5
+    testImplementation group: 'io.quarkus', name: 'quarkus-junit5', version: '3.13.0'
+
+    // https://mvnrepository.com/artifact/io.quarkus/quarkus-test-vertx
+    testImplementation group: 'io.quarkus', name: 'quarkus-test-vertx', version: '3.13.0'
+}
+
+group 'org.acme'
+version '1.0.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+test {
+    systemProperty "java.util.logging.manager", "org.jboss.logmanager.LogManager"
+}
+compileJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-parameters'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
