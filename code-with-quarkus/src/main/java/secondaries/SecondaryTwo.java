@@ -1,19 +1,21 @@
 package secondaries;
 
+import io.quarkus.arc.Unremovable;
 import io.quarkus.runtime.Startup;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 @Startup
+@Unremovable
 public class SecondaryTwo extends SecondaryAbstract {
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "TWO";
     }
 
-    @PostConstruct
+    @Override
     public void init() {
         System.out.println("Postconstract in SecondaryTwo");
     }

@@ -11,9 +11,6 @@ public abstract class SecondaryAbstract implements Secondary {
 
     protected abstract void init();
 
-    protected abstract String getName();
-
-
     @PostConstruct
     protected void initWebClientAndAddImplementationToMap() {
         init();

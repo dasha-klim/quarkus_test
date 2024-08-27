@@ -1,5 +1,6 @@
 package main_package;
 
+import io.quarkus.arc.Unremovable;
 import io.quarkus.runtime.Startup;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @ApplicationScoped
 @Startup
+@Unremovable
 public class MainService {
 
     private final Map<String, Secondary> secondariesMap = new HashMap<>();

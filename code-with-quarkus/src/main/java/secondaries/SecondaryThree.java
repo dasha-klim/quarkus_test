@@ -1,10 +1,12 @@
 package secondaries;
 
+import io.quarkus.arc.Unremovable;
 import io.quarkus.runtime.Startup;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 @Startup
+@Unremovable
 public class SecondaryThree extends SecondaryAbstract {
 
     @Override
@@ -13,7 +15,7 @@ public class SecondaryThree extends SecondaryAbstract {
     }
 
     @Override
-    protected String getName() {
+    public String getName() {
         return "THREE";
     }
 }
