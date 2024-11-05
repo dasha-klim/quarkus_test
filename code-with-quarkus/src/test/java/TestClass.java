@@ -1,50 +1,44 @@
-import io.quarkus.arc.All;
-import io.quarkus.test.component.QuarkusComponentTest;
-import jakarta.enterprise.inject.Instance;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import main_package.MainService;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import secondaries.Secondary;
-import secondaries.SecondaryOne;
-import secondaries.SecondaryThree;
-import secondaries.SecondaryTwo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.Set;
 import java.util.stream.Collectors;
 
-@QuarkusComponentTest({SecondaryTwo.class, SecondaryOne.class, SecondaryThree.class})
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@QuarkusTest
 public class TestClass {
 
     @Inject
     MainService mainService;
 
-    @Inject
-    @All
-    List<Secondary> secondaries;
+    private static Map<String, Long> map = new HashMap<>();
 
-    Map<String, Secondary> secondaryMap;
-
-//    Instance<Secondary> secondaryInstance;
 
     @BeforeAll
     public void beforeAllTests() {
-        System.out.println("Before all tests ");
-        System.out.println("secondaries map " + mainService.getSecondariesMap());
-
-        secondaryMap = secondaries.stream().collect(Collectors.toMap(Secondary::getName, Function.identity()));
-
-        System.out.println("secondaries map " + mainService.getSecondariesMap());
-
+        List<String> list = mainService.getList();
+        map = list.stream().collect(Collectors.groupingBy(k -> k,Collectors.counting()));
+        System.out.println("Map in @BeforeAll" + map);
 
     }
 
-    @Test
-    public void test() {
-        System.out.println("in test");
+    @ParameterizedTest
+    @MethodSource("getData")
+    public void test(String key) {
+        System.out.println("Key " + key);
+    }
+
+    public Set<String> getData() {
+        System.out.println("Map in getData " + map);
+        return map.keySet();
     }
 }

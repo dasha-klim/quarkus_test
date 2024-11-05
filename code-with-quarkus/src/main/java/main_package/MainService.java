@@ -2,30 +2,16 @@ package main_package;
 
 import io.quarkus.arc.Unremovable;
 import io.quarkus.runtime.Startup;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
-import secondaries.Secondary;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @ApplicationScoped
 @Startup
 @Unremovable
 public class MainService {
 
-    private final Map<String, Secondary> secondariesMap = new HashMap<>();
-
-    @PostConstruct
-    public void init() {
-        System.out.println("Postconstract MainService");
-    }
-
-    public void putSecondaryToMap(String name, Secondary secondary) {
-        secondariesMap.put(name, secondary);
-    }
-
-    public Map<String, Secondary> getSecondariesMap() {
-        return secondariesMap;
+    public List<String> getList() {
+        return List.of("a", "b", "c", "d", "b", "b", "h", "a");
     }
 }
